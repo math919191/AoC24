@@ -37,17 +37,25 @@ for key in freq_to_coor.keys():
         x_dif = a_coor[0] - b_coor[0]
         y_dif = a_coor[1] - b_coor[1]
 
-        a_coor = (a_coor[0]+x_dif, a_coor[1]+y_dif)
-        b_coor = (b_coor[0]-x_dif, b_coor[1]-y_dif)
+        counter = 0
+        while True:
+            new_a_coor = (a_coor[0]+x_dif*counter, a_coor[1]+y_dif*counter)
+            if in_range(new_a_coor, n):
+                all_freq.append(new_a_coor)
+                grid_array[new_a_coor[0]][new_a_coor[1]] = "#"
+                counter+=1
+            else:
+                break
 
-        if in_range(a_coor, n):
-            all_freq.append(a_coor)
-            grid_array[a_coor[0]][a_coor[1]] = "#"
-
-        if in_range(b_coor, n):
-            all_freq.append(b_coor)
-            grid_array[b_coor[0]][b_coor[1]] = "#"
-
+        counter = 0
+        while True:
+            new_b_coor = (b_coor[0]-x_dif*counter, b_coor[1]-y_dif*counter)
+            if in_range(new_b_coor, n):
+                all_freq.append(new_b_coor)
+                grid_array[new_b_coor[0]][new_b_coor[1]] = "#"
+                counter += 1
+            else:
+                break
 
 for row in grid_array:
     print()
@@ -55,7 +63,3 @@ for row in grid_array:
         print(l, end="")
 
 print("\n\nAnswer:", len(set(all_freq)))
-
-# 252 is low and wrong
-
-# 271 is too high
